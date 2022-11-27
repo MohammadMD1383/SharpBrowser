@@ -23,9 +23,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Windows-x64
-      run: dotnet publish --no-restore --sc -r win-x64
+      run: dotnet publish --sc -r win-x64
     - name: Publish Linux-x64
-      run: dotnet publish --no-restore --sc -r linux-x64
+      run: dotnet publish --sc -r linux-x64
     - name: Release Windows-x64
       uses: TheDoctor0/zip-release@0.6.2
       with:
