@@ -1,1 +1,29 @@
-﻿@RenderBody()
+﻿<!doctype html>
+<html lang="en" class="is-unselectable">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" type="text/css" href="css/bulma.min.css">
+		<style>
+			@@font-face {
+				font-family: BootstrapIcons;
+				src: url("font/bootstrap-icons.woff2");
+			}
+			
+			.bi { 
+				font-family: BootstrapIcons !important;
+				font-style: normal;
+			}
+		</style>
+		<title>Sharp Browser</title>
+	</head>
+
+	<body>
+		@RenderBody()
+
+		<footer class="footer">
+			<small>Sharp Browser &copy; 2022 - By <a href="https://github.com/mohammadmd1383">Mohammad Mostafa Dastjerdi</a></small>
+		</footer>
+	</body>
+</html>

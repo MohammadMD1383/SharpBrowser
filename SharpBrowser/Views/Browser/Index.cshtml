@@ -1,48 +1,64 @@
 ﻿@using static System.IO.Path
 @model BrowserViewModel
 
-<header>
-	<a href="/">ROOT</a>
-	@for (var i = 0; i < Model.Path.Length; i++) {
-		var p = Model.Path[i];
-		var href = Combine(Model.Root, string.Join("/", Model.Path.Take(i + 1)));
-		<span>></span>
-		<a asp-action="Index" asp-route-path="@href">@p</a>
-	}
+<header class="block p-3">
+	<nav class="breadcrumb has-succeeds-separator is-centered">
+		<ul>
+			<li>
+				<a href="/">ROOT</a>
+			</li>
+
+			@for (var i = 0; i < Model.Path.Length; i++) {
+				var p = Model.Path[i];
+				var href = Combine(Model.Root, string.Join("/", Model.Path.Take(i + 1)));
+				<li>
+					<a asp-action="Index" asp-route-path="@href">@p</a>
+				</li>
+			}
+		</ul>
+	</nav>
 </header>
 
-<table>
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Size</th>
-			<th>Action</th>
-		</tr>
-	</thead>
+<div class="columns is-centered">
+	<div class="column is-full is-half-desktop">
+		<table class="table is-hoverable is-fullwidth">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Size</th>
+					<th>Action</th>
+				</tr>
+			</thead>
 
-	<tbody>
-		@foreach (var dir in Model.Directories) {
-			<tr>
-				<td>
-					<a asp-action="Index" asp-route-path="@dir.FullPath">@dir.Path/</a>
-				</td>
-				<td>-</td>
-				<td>
-					<a asp-action="Download" asp-route-path="@dir.FullPath">Download</a>
-				</td>
-			</tr>
-		}
+			<tbody>
+				@foreach (var dir in Model.Directories) {
+					<tr>
+						<td>
+							<a asp-action="Index" asp-route-path="@dir.FullPath">@dir.Path()/</a>
+						</td>
+						<td>-</td>
+						<td>
+							<a asp-action="Download" asp-route-path="@dir.FullPath" class="icon button is-link is-light" title="Download">
+								<i class="bi">&#xF295;</i>
+							</a>
+						</td>
+					</tr>
+				}
 
-		@foreach (var file in Model.Files) {
-			<tr>
-				<td>
-					<a asp-action="ViewFile" asp-route-path="@file.FullPath">@file.Path</a>
-				</td>
-				<td>@file.HumanReadableSize()</td>
-				<td>
-					<a asp-action="Download" asp-route-path="@file.FullPath">Download</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+				@foreach (var file in Model.Files) {
+					<tr>
+						<td>
+							<a asp-action="ViewFile" asp-route-path="@file.FullPath">@file.Path()</a>
+						</td>
+						<td>@file.HumanReadableSize()</td>
+						<td>
+							<a asp-action="Download" asp-route-path="@file.FullPath" class="icon button is-link	is-light" title="Download">
+								<i class="bi">&#xF295;</i>
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

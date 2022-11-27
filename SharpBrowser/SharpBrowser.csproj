@@ -4,6 +4,9 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishTrimmed>true</PublishTrimmed>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -65,10 +68,6 @@
 	  <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
 	  <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
 	  <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="wwwroot" />
 	</ItemGroup>
 	
 	<ItemGroup>

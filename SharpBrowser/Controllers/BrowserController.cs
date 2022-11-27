@@ -1,21 +1,34 @@
 ﻿using System.IO.Compression;
 using Microsoft.AspNetCore.Mvc;
 using SharpBrowser.Models;
+using SharpBrowser.PlatformSpecific;
 
 namespace SharpBrowser.Controllers;
 
 public class BrowserController : Controller {
 	public IActionResult Index([FromQuery] string path = "/") {
-		var directories = Directory.GetDirectories(path).Select(
-			dir => new BrowserViewModel.Entry { FullPath = dir }
-		).ToArray();
+		BrowserViewModel.Entry[] directories;
+		BrowserViewModel.Entry[] files;
 
-		var files = Directory.GetFiles(path).Select(
-			file => new BrowserViewModel.Entry {
-				FullPath = file,
-				Size = new FileInfo(file).Length
-			}
-		).ToArray();
+		if (Platform.IsWindows && path == "/") {
+			directories = DriveInfo.GetDrives().Where(drive => drive.IsReady).Select(
+				drive => new BrowserViewModel.Entry { FullPath = drive.RootDirectory.Name }
+			).ToArray();
+
+			files = Array.Empty<BrowserViewModel.Entry>();
+		} else {
+			directories = Directory.GetDirectories(path).Select(
+				dir => new BrowserViewModel.Entry { FullPath = dir }
+			).ToArray();
+
+			files = Directory.GetFiles(path).Select(
+				file => new BrowserViewModel.Entry {
+					FullPath = file,
+					Size = new FileInfo(file).Length
+				}
+			).ToArray();
+		}
+
 
 		var model = new BrowserViewModel {
 			Root = "/",
