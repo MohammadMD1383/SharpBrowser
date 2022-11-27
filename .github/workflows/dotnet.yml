@@ -4,8 +4,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "master" ]
   workflow_dispatch:
 
 
@@ -20,8 +18,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Publish Windows-x64
       run: dotnet publish --sc -r win-x64
     - name: Publish Linux-x64
@@ -38,8 +34,11 @@ jobs:
         type: zip
         filename: SharpBrowser-linux-x64.zip
         path: SharpBrowser/bin/Debug/net7.0/linux-x64/publish
+    - name: Determine Version Number
+      run: export RELEASE_VERSION=`git rev-list --count master`
     - name: Upload Releases
       uses: ncipollo/release-action@v1
       with:
         artifacts: "SharpBrowser*.zip"
+        tag: "release-${{ env.RELEASE_VERSION }}"
         token: ${{ secrets.GITHUB_TOKEN }}
