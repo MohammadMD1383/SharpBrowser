@@ -48,15 +48,10 @@ jobs:
           type: zip
           filename: SharpBrowser-osx-x64.zip
           path: SharpBrowser/bin/Debug/net7.0/osx-x64/publish
-          
-      - name: Determine Version Number
-        uses: einaregilsson/build-number@v3
-        with:
-          token: ${{ secrets.github_token }}
         
       - name: Upload Releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: "SharpBrowser*.zip"
-          tag: "release-${{ env.BUILD_NUMBER }}"
+          tag: "release-${{ env.GITHUB_RUN_NUMBER }}"
           token: ${{ secrets.GITHUB_TOKEN }}
