@@ -32,7 +32,7 @@ public partial class BrowserViewModel {
 			return $"{num} {Suffixes[place]}";
 		}
 
-		[GeneratedRegex("^[A-Z]:\\$")]
+		[GeneratedRegex(@"^[A-Z]:\\$")]
 		private static partial Regex DriveNamePattern();
 	}
 }
