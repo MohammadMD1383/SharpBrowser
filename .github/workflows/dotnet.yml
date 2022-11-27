@@ -50,11 +50,13 @@ jobs:
           path: SharpBrowser/bin/Debug/net7.0/osx-x64/publish
           
       - name: Determine Version Number
-        run: echo "RELEASE_VERSION=$(git rev-list --count master)" >> $GITHUB_ENV
+        uses: einaregilsson/build-number@v3
+        with:
+          token: ${{ secrets.github_token }}
         
       - name: Upload Releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: "SharpBrowser*.zip"
-          tag: "release-${{ env.RELEASE_VERSION }}"
+          tag: "release-${{ env.BUILD_NUMBER }}"
           token: ${{ secrets.GITHUB_TOKEN }}
