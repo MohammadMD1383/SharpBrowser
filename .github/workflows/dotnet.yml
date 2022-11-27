@@ -1,0 +1,45 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish Windows-x64
+      run: dotnet publish --no-restore --sc -r win-x64
+    - name: Publish Linux-x64
+      run: dotnet publish --no-restore --sc -r linux-x64
+    - name: Release Windows-x64
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        type: zip
+        filename: SharpBrowser-win-x64.zip
+        path: SharpBrowser/bin/Debug/net7.0/win-x64/publish
+    - name: Release Linux-x64
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        type: zip
+        filename: SharpBrowser-linux-x64.zip
+        path: SharpBrowser/bin/Debug/net7.0/linux-x64/publish
+    - name: Upload Releases
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "SharpBrowser*.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
