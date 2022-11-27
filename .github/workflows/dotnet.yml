@@ -35,7 +35,7 @@ jobs:
         filename: SharpBrowser-linux-x64.zip
         path: SharpBrowser/bin/Debug/net7.0/linux-x64/publish
     - name: Determine Version Number
-      run: export RELEASE_VERSION=`git rev-list --count master`
+      run: echo "RELEASE_VERSION=$(git rev-list --count master)" >> $GITHUB_ENV
     - name: Upload Releases
       uses: ncipollo/release-action@v1
       with:
