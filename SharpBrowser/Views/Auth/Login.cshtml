@@ -1,0 +1,26 @@
+@model LoginViewModel
+
+<main class="is-flex is is-fullwidth is-justify-content-center is-align-items-center is-flex-direction-column" style="height: 100vh">
+	@if (Model.Readable) {
+		<form action="@Url.Action("Login")@Context.Request.QueryString" method="post">
+			<div class="field has-text-centered">
+				<label for="secret" class="label">Secret Code:</label>
+				<div class="control">
+					<input class="input is-info" type="password" name="secret" id="secret" required>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="control">
+					<input class="button is-success is-fullwidth" type="submit" value="Submit">
+				</div>
+			</div>
+		</form>
+		
+		@if (!Model.Writable) {
+			<span class="has-text-danger mt-3">Warning: Write Access is Disabled</span>
+		}
+	} else {
+		<span class="has-text-danger">No Access</span>
+	}
+</main>

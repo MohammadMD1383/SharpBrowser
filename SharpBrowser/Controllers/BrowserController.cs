@@ -1,10 +1,12 @@
 ﻿using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharpBrowser.Models;
 using SharpBrowser.PlatformSpecific;
 
 namespace SharpBrowser.Controllers;
 
+[Authorize(policy: Policy.ReadAccess)]
 public class BrowserController : Controller {
 	public IActionResult Index([FromQuery] string path = "/") {
 		BrowserViewModel.Entry[] directories;
