@@ -4,6 +4,9 @@
 name: .NET
 
 on:
+  push:
+    tags:
+    - "*"
   workflow_dispatch:
 
 
@@ -53,5 +56,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "SharpBrowser*.zip"
-          tag: "release-${{ env.GITHUB_RUN_NUMBER }}"
           token: ${{ secrets.GITHUB_TOKEN }}
