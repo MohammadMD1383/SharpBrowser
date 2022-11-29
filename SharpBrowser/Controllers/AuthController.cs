@@ -51,4 +51,8 @@ public class AuthController : Controller {
 		await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 		return RedirectToAction("Login");
 	}
+
+	public IActionResult Forbidden() {
+		return View();
+	}
 }
