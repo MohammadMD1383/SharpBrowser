@@ -33,7 +33,7 @@ public class BrowserController : Controller {
 
 
 		var model = new BrowserViewModel {
-			Root = "/",
+			Root = Path.GetPathRoot(path)!,
 			Path = path.Trim('/').Split('/').Where(p => p != "").ToArray(),
 			Directories = directories,
 			Files = files
