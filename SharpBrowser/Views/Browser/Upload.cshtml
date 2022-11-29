@@ -1,0 +1,40 @@
+@model UploadViewModel
+
+<main class="is-flex is-align-items-center is-justify-content-center is-flex-direction-column" style="height: 100vh">
+	<div class="has-text-weight-bold has-text-centered has-text-info mb-3">Uploading to: @Model.Destination</div>
+
+	<form asp-action="Upload" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="destination" value="@Model.Destination">
+		
+		<div class="file has-name is-boxed">
+			<label for="file" class="file-label">
+				<input class="file-input" type="file" name="file" id="file">
+				<span class="file-cta">
+					<span class="file-label">Choose a File ...</span>
+				</span>
+				<span class="file-name has-text-centered" id="file-name">No File Chosen</span>
+			</label>
+		</div>
+
+		<div class="field mt-3">
+			<div class="control">
+				<input class="button is-success is-fullwidth" type="submit" value="Upload">
+			</div>
+
+			<div class="control">
+				<a class="button is-danger is-fullwidth" asp-action="Index" asp-route-path="@Model.Destination">Cancel</a>
+			</div>
+		</div>
+	</form>
+</main>
+
+@section script {
+	<script>
+		/** @@type {HTMLInputElement} */ const file = document.getElementById("file");
+		/** @@type {HTMLSpanElement} */ const fileName = document.getElementById("file-name");
+		
+		file.onchange = () => {
+			fileName.textContent = file.value.split("\\").slice(-1).pop();
+		};
+	</script>
+}

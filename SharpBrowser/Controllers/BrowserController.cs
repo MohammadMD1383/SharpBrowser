@@ -31,12 +31,13 @@ public class BrowserController : Controller {
 			).ToArray();
 		}
 
-
 		var model = new BrowserViewModel {
 			Root = Path.GetPathRoot(path)!,
+			FullPath = path,
 			Path = path.Trim('/').Split('/').Where(p => p != "").ToArray(),
 			Directories = directories,
-			Files = files
+			Files = files,
+			HasWritePermission = HttpContext.User.HasClaim(Auth.AccessLevel, Auth.Write)
 		};
 
 		return View("Index", model);
@@ -60,5 +61,18 @@ public class BrowserController : Controller {
 		}
 
 		return File(reader.BaseStream, MimeTypes.GetMimeType(fileName), fileName);
+	}
+
+	[Authorize(policy: Policy.WriteAccess)]
+	public IActionResult Upload([FromQuery] string destination) {
+		return View(new UploadViewModel { Destination = destination });
+	}
+
+	[HttpPost]
+	[Authorize(policy: Policy.WriteAccess)]
+	public async Task<IActionResult> Upload([FromForm] string destination, [FromForm] IFormFile file) {
+		await using var stream = System.IO.File.Create(Path.Combine(destination, file.FileName));
+		await file.CopyToAsync(stream);
+		return RedirectToAction("Index", new { path = destination });
 	}
 }

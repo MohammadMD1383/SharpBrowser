@@ -4,10 +4,12 @@ using SharpBrowser.PlatformSpecific;
 namespace SharpBrowser.Models;
 
 public partial class BrowserViewModel {
-	public required string   Root        { get; init; }
-	public required string[] Path        { get; init; }
-	public required Entry[]  Directories { get; init; }
-	public required Entry[]  Files       { get; init; }
+	public required string   Root               { get; init; }
+	public required string   FullPath           { get; set; }
+	public required string[] Path               { get; init; }
+	public required Entry[]  Directories        { get; init; }
+	public required Entry[]  Files              { get; init; }
+	public required bool     HasWritePermission { get; init; }
 
 	public partial class Entry {
 		private static readonly string[] Suffixes = { "B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB" };

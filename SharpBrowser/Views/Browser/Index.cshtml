@@ -17,9 +17,13 @@
 			}
 		</ul>
 	</nav>
-	
+
 	<nav class="has-text-centered">
 		<a class="button is-danger" asp-controller="Auth" asp-action="Logout">Logout</a>
+
+		@if (Model.HasWritePermission) {
+			<a class="button is-info" asp-controller="Browser" asp-action="Upload" asp-route-destination="@Model.FullPath">Upload</a>
+		}
 	</nav>
 </header>
 
