@@ -34,7 +34,7 @@
 				@foreach (var dir in Model.Directories) {
 					<tr>
 						<td>
-							<a asp-action="Index" asp-route-path="@dir.FullPath">@dir.Path()/</a>
+							<a class="is-block" asp-action="Index" asp-route-path="@dir.FullPath">@dir.Path()/</a>
 						</td>
 						<td>-</td>
 						<td>
@@ -48,7 +48,7 @@
 				@foreach (var file in Model.Files) {
 					<tr>
 						<td>
-							<a asp-action="ViewFile" asp-route-path="@file.FullPath">@file.Path()</a>
+							<a class="is-block" asp-action="ViewFile" asp-route-path="@file.FullPath">@file.Path()</a>
 						</td>
 						<td>@file.HumanReadableSize()</td>
 						<td>
