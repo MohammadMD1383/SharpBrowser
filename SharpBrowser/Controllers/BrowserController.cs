@@ -31,10 +31,11 @@ public class BrowserController : Controller {
 			).ToArray();
 		}
 
+		var dirSeparator = Path.DirectorySeparatorChar;
 		var model = new BrowserViewModel {
 			Root = Path.GetPathRoot(path)!,
 			FullPath = path,
-			Path = path.Trim('/').Split('/').Where(p => p != "").ToArray(),
+			Path = path.Trim(dirSeparator).Split(dirSeparator).Where(p => p != "").ToArray(),
 			Directories = directories,
 			Files = files,
 			HasWritePermission = HttpContext.User.HasClaim(Auth.AccessLevel, Auth.Write)
