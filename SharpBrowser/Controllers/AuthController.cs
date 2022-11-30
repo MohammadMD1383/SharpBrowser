@@ -7,19 +7,10 @@ using SharpBrowser.Models;
 namespace SharpBrowser.Controllers;
 
 public class AuthController : Controller {
-	private readonly string?        _readSecret;
-	private readonly string?        _writeSecret;
-	private readonly LoginViewModel _loginViewModel;
-
-	public AuthController(IConfiguration configuration) {
-		_readSecret = configuration["Access:Read"];
-		_writeSecret = configuration["Access:Write"];
-		
-		_loginViewModel = new LoginViewModel {
-			Readable = _readSecret != null,
-			Writable = _writeSecret != null
-		};
-	}
+	private readonly LoginViewModel _loginViewModel = new() {
+		Readable = Auth.ReadSecret != "",
+		Writable = Auth.WriteSecret != ""
+	};
 
 	[HttpGet]
 	public IActionResult Login() {
@@ -28,14 +19,14 @@ public class AuthController : Controller {
 
 	[HttpPost]
 	public async Task<IActionResult> Login([FromForm] string secret, [FromQuery] string? returnUrl = null) {
-		if (_readSecret == null) return View(_loginViewModel);
+		if (Auth.ReadSecret == "") return View(_loginViewModel);
 		
 		var claims = new List<Claim>();
 		
-		if (secret == _readSecret)
-			claims.Add(new Claim(Auth.AccessLevel, Auth.Read));
-		else if (_writeSecret != null && secret == _writeSecret)
+		if (Auth.WriteSecret != "" && secret == Auth.WriteSecret)
 			claims.Add(new Claim(Auth.AccessLevel, Auth.Write));
+		else if (secret == Auth.ReadSecret)
+			claims.Add(new Claim(Auth.AccessLevel, Auth.Read));
 		else return View(_loginViewModel);
 
 		var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

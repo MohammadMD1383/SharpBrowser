@@ -1,6 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SharpBrowser;
 
+
+#region set passwords
+Console.Write("Read Secret Code: ");
+Auth.ReadSecret = Console.ReadLine() ?? "";
+Console.Write("Write Secret Code: ");
+Auth.WriteSecret = Console.ReadLine() ?? "";
+#endregion
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
