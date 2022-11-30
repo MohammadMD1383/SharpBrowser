@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharpBrowser.Models;
-using SharpBrowser.PlatformSpecific;
 
 namespace SharpBrowser.Controllers;
 

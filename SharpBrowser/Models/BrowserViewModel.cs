@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using SharpBrowser.PlatformSpecific;
 
 namespace SharpBrowser.Models;
 
