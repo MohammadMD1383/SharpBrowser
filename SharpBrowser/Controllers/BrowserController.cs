@@ -8,7 +8,9 @@ namespace SharpBrowser.Controllers;
 
 [Authorize(policy: Policy.ReadAccess)]
 public class BrowserController : Controller {
-	public IActionResult Index([FromQuery] string path = "/") {
+	public IActionResult Index([FromQuery] string? path) {
+		var dirSeparator = Path.DirectorySeparatorChar;
+		path ??= dirSeparator.ToString();
 		BrowserViewModel.Entry[] directories;
 		BrowserViewModel.Entry[] files;
 
@@ -31,7 +33,6 @@ public class BrowserController : Controller {
 			).ToArray();
 		}
 
-		var dirSeparator = Path.DirectorySeparatorChar;
 		var model = new BrowserViewModel {
 			Root = Path.GetPathRoot(path)!,
 			FullPath = path,
