@@ -50,13 +50,14 @@ public class BrowserController : Controller {
 	}
 
 	public IActionResult Download([FromQuery] string path) {
-		var fileName = Path.GetFileName(path) + ".zip";
+		var fileName = Path.GetFileName(path);
 		StreamReader reader;
 
 		if (System.IO.File.GetAttributes(path).HasFlag(FileAttributes.Directory)) {
 			var dummyFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 			ZipFile.CreateFromDirectory(path, dummyFile);
 			reader = new StreamReader(dummyFile);
+			fileName += ".zip";
 		} else {
 			reader = new StreamReader(path);
 		}
