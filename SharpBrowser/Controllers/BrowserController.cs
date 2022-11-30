@@ -54,9 +54,17 @@ public class BrowserController : Controller {
 		StreamReader reader;
 
 		if (System.IO.File.GetAttributes(path).HasFlag(FileAttributes.Directory)) {
-			var dummyFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-			ZipFile.CreateFromDirectory(path, dummyFile);
-			reader = new StreamReader(dummyFile);
+			string zipFile;
+			
+			if (!Cache.ZipCache.ContainsKey(path)) {
+				zipFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+				ZipFile.CreateFromDirectory(path, zipFile);
+				Cache.ZipCache[path] = zipFile;
+			} else {
+				zipFile = Cache.ZipCache[path];
+			}
+
+			reader = new StreamReader(zipFile);
 			fileName += ".zip";
 		} else {
 			reader = new StreamReader(path);
