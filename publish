@@ -1,0 +1,3 @@
+#!/bin/bash
+
+dotnet publish --sc -r $1 -c Release
