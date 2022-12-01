@@ -13,7 +13,7 @@ public class BrowserController : Controller {
 		BrowserViewModel.Entry[] directories;
 		BrowserViewModel.Entry[] files;
 
-		if (Platform.IsWindows && path == "/") {
+		if (Platform.IsWindows && path == dirSeparator.ToString()) {
 			directories = DriveInfo.GetDrives().Where(drive => drive.IsReady).Select(
 				drive => new BrowserViewModel.Entry { FullPath = drive.RootDirectory.Name }
 			).ToArray();
